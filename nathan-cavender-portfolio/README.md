@@ -21,6 +21,6 @@ Open `index.html` directly, or serve the folder with any static web server.
 
 ## Before publishing
 - Add your GitHub and LinkedIn URLs if desired.
-- Replace abstract project visuals with screenshots when available.
+- Verify project screenshots and thumbnails before publishing.
 - Verify the public resume contains only contact information you want online.
 - Never commit API keys or other secrets.
