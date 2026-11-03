@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task Tamer – AI task scheduler – Nathan Cavender</title>
+<meta name="description" content="Task Tamer: an LLM-assisted scheduler that places tasks around existing events, with a pet that evolves.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="index.html">Nathan Cavender</a><nav aria-label="Projects"><a href="who.html">Usability testing</a><a href="hub.html">Resource hub</a><a href="tamer.html" aria-current="page">Task Tamer</a><a href="annotation.html">AI evaluation</a><a href="index.html#projects">All projects</a></nav></div></header>
+<main>
+<section class="proj detail" id="tamer"><div class="wrap">
+  <p class="meta">Prototype · HTML, JavaScript and an LLM API</p>
+  <h2>Task Tamer: an AI scheduler that plans work around what’s already on your week.</h2>
+  <div class="cols">
+    <div>
+      <p>You enter a task, how long it takes, and when it’s due. Task Tamer finds time for it around your existing events and shows the result on a weekly calendar. Finishing blocks makes a pet evolve from egg to creature, a small reward loop for getting things done.</p>
+      <h3>The design decision I’d point to</h3>
+      <p>The language model suggests a slot, but my code decides whether it’s allowed. Each suggestion is checked against busy times, working hours, the due date, and a rule against stacking the same task on one day. If a suggestion fails, a deterministic slot finder places the block instead. The model adds flexibility; it can’t break the schedule.</p>
+      <ul class="rules plain">
+        <li>Working hours 9:00–21:00</li>
+        <li>15-minute buffers between blocks</li>
+        <li>Long tasks split into sessions of 3 hours or less</li>
+        <li>Weekdays first, weekends only as a last resort</li>
+        <li>Everything lands before the due date</li>
+        <li>The model also writes a short note on why it scheduled things that way</li>
+      </ul>
+      <p><a class="btn" href="https://canva.link/1tadxg00lgv48jq" rel="noopener">View the presentation</a></p>
+      <ul class="chips"><li>JavaScript</li><li>LLM API (GPT-4o mini)</li><li>Prompt design</li><li>Constraint checking</li><li>Gamification</li></ul>
+    </div>
+    <figure class="panel hero-shot" style="margin:0"><a href="images/tamer-schedule-and-pet.jpg"><img src="images/tamer-schedule-and-pet.jpg" alt="Task Tamer showing an AI explanation of the schedule, a Homework block with a Complete checkbox, and the evolved green creature" style="width:100%;height:auto;display:block;border-radius:8px"></a><figcaption class="note" style="margin-top:.7rem">The result. The AI note explains why the block landed where it did, the task has a Complete checkbox, and the creature has evolved after completed work.</figcaption></figure>
+  </div>
+  <div class="shots tamer">
+    <figure><a href="images/tamer-add-event.jpg"><img src="images/tamer-add-event.jpg" alt="Add Event form with name, date, start time, length and color" loading="lazy"></a><figcaption><b>1. Register existing events.</b> These become the busy times the scheduler works around.</figcaption></figure>
+    <figure><a href="images/tamer-add-task.jpg"><img src="images/tamer-add-task.jpg" alt="Add Task form with due date, duration, priority and a queue of tasks to schedule" loading="lazy"></a><figcaption><b>2. Queue tasks.</b> Set a due date, duration and priority, then schedule the whole queue with one button.</figcaption></figure>
+    <figure><a href="images/tamer-baby-creature.jpg"><img src="images/tamer-baby-creature.jpg" alt="Pixel-art baby creature with leaf ears" loading="lazy"></a><figcaption><b>3. Earn your creature.</b> The baby form appears after the first completed tasks and grows from there.</figcaption></figure>
+  </div>
+<div class="nextrow"><a href="hub.html"><span>&larr; Previous</span>Resource hub</a><a href="annotation.html" style="text-align:right"><span>Next &rarr;</span>AI evaluation</a></div></div></section>
+</main>
+<footer><div class="wrap"><p style="margin-bottom:.5rem"><a href="index.html#projects">&larr; All projects</a></p><p class="note">Nathan Cavender &middot; <a href="mailto:cavender.nat@gmail.com">cavender.nat@gmail.com</a> &middot; <a href="Nathan_Cavender_Resume.pdf">Resume (PDF)</a></p></div></footer>
+</body>
+</html>

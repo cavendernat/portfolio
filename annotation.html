@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluating LLM annotation against human ground truth – Nathan Cavender</title>
+<meta name="description" content="A pipeline that compares LLM operator-comment labels with human ground truth, with accuracy, kappa and F1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="index.html">Nathan Cavender</a><nav aria-label="Projects"><a href="who.html">Usability testing</a><a href="hub.html">Resource hub</a><a href="tamer.html">Task Tamer</a><a href="annotation.html" aria-current="page">AI evaluation</a><a href="index.html#projects">All projects</a></nav></div></header>
+<main>
+<section class="proj detail" id="annotation"><div class="wrap">
+  <p class="meta">Data pipeline and evaluation · Graduate research assistant, UNC School of Information and Library Science with the Lab for Analytical Science</p>
+  <h2>Can an LLM place and label analyst comments the way people do?</h2>
+  <div class="cols">
+    <div>
+      <p>Analysts reading transcripts of recorded conversations add “operator comments” that explain what a passage means: who someone is, what a phrase hints at, what happened before. The team had a two-level taxonomy of about two dozen comment codes and a platform meant to learn it.</p>
+      <p>I built the pipeline that tests it. It takes a transcript and the taxonomy, asks an LLM where comments belong and which type each should be, then compares the answers with human-labeled ground truth. I automated alignment of transcripts, annotations and model output in Python and Excel, and designed experiments to surface inconsistencies and edge cases.</p>
+      <ol class="flow" aria-label="Pipeline steps"><li>Transcript</li><li>Taxonomy</li><li>LLM labels</li><li>Align</li><li>Compare to humans</li></ol>
+      <div class="big"><div><b>58%</b>accuracy on 708 human-labeled comments</div><div><b>0.28</b>Cohen’s kappa, agreement beyond chance</div><div><b>0.20</b>macro F1, averaged evenly across 9 types</div></div>
+      <h3>What the metrics showed</h3>
+      <ul class="plain">
+        <li><b>Accuracy hides the problem.</b> Weighted F1 is 0.56, but macro F1 is 0.20, because the model does well on the common clarification type and fails on the rare ones.</li>
+        <li><b>It over-labels clarification.</b> It got 80% of true clarifications, but 479 of its 708 labels were clarification, and 149 of them were wrong.</li>
+        <li><b>Context: right when it speaks, silent most of the time.</b> Precision is 65%, recall only 11%. Most missed context comments were relabeled as clarification (72 of 123).</li>
+        <li><b>Underlying intent: the opposite.</b> Recall is 57%, but it assigned the label 80 times and was right 4 times (5% precision). The prompt needs a sharper line between intent and the other types.</li>
+        <li>Acoustic elements, cover terms and speculation about unintelligible audio were never predicted.</li>
+      </ul>
+      <ul class="chips"><li>Python</li><li>Excel</li><li>LLM evaluation</li><li>Ground-truth comparison</li><li>Error analysis</li></ul>
+    </div>
+    <div class="panel">
+      <h3>Where the model drifted (full taxonomy)</h3>
+      <div class="key"><span><i class="hum"></i>Human labels</span><span><i class="mod"></i>Model labels</span></div>
+      <div class="bars">
+        <div class="bar"><div class="lab"><span>Abstract clarification</span><span>190 vs 24</span></div><div class="track"><i class="hum" style="width:95%"></i></div><div class="track"><i class="mod" style="width:12%"></i></div></div>
+        <div class="bar"><div class="lab"><span>Context</span><span>123 vs 20</span></div><div class="track"><i class="hum" style="width:61.5%"></i></div><div class="track"><i class="mod" style="width:10%"></i></div></div>
+        <div class="bar"><div class="lab"><span>Unclear</span><span>26 vs 199</span></div><div class="track"><i class="hum" style="width:13%"></i></div><div class="track"><i class="mod" style="width:99.5%"></i></div></div>
+        <div class="bar"><div class="lab"><span>Underlying intent</span><span>7 vs 80</span></div><div class="track"><i class="hum" style="width:3.5%"></i></div><div class="track"><i class="mod" style="width:40%"></i></div></div>
+      </div>
+      <h3 style="margin-top:1.5rem">Precision, recall and F1 by type</h3>
+      <table class="pr" aria-label="Precision, recall and F1 by comment type"><thead><tr><th scope="col">Type</th><th scope="col">Precision</th><th scope="col">Recall</th><th scope="col">F1</th></tr></thead><tbody>
+      <tr><th scope="row">Clarification (414)</th><td>0.69</td><td>0.80</td><td>0.74</td></tr>
+      <tr><th scope="row">Reference (103)</th><td>0.58</td><td>0.61</td><td>0.60</td></tr>
+      <tr><th scope="row">Context (123)</th><td>0.65</td><td>0.11</td><td>0.18</td></tr>
+      <tr><th scope="row">Underlying intent (7)</th><td>0.05</td><td>0.57</td><td>0.09</td></tr>
+      <tr><th scope="row">Nature of statement (23)</th><td>0.17</td><td>0.09</td><td>0.11</td></tr>
+      <tr><th scope="row">Implication (10)</th><td>0.11</td><td>0.10</td><td>0.11</td></tr>
+      <tr><th scope="row">Acoustic, cover term, speculation (28)</th><td>0</td><td>0</td><td>0</td></tr></tbody></table>
+      <p class="note" style="margin:1rem 0 0">Bar chart counts across 22 transcripts, from the earlier comparison file. “Top-level family” groups the clarification subtypes together, apart from context, reference and the other types.</p>
+    </div>
+  </div>
+<div class="nextrow"><a href="tamer.html"><span>&larr; Previous</span>Task Tamer</a><span></span></div></div></section>
+</main>
+<footer><div class="wrap"><p style="margin-bottom:.5rem"><a href="index.html#projects">&larr; All projects</a></p><p class="note">Nathan Cavender &middot; <a href="mailto:cavender.nat@gmail.com">cavender.nat@gmail.com</a> &middot; <a href="Nathan_Cavender_Resume.pdf">Resume (PDF)</a></p></div></footer>
+</body>
+</html>

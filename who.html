@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WHO Mortality Database usability study – Nathan Cavender</title>
+<meta name="description" content="Usability study of the WHO Mortality Database: test plan, five participants, three tasks, and what we found.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="index.html">Nathan Cavender</a><nav aria-label="Projects"><a href="who.html" aria-current="page">Usability testing</a><a href="hub.html">Resource hub</a><a href="tamer.html">Task Tamer</a><a href="annotation.html">AI evaluation</a><a href="index.html#projects">All projects</a></nav></div></header>
+<main>
+<section class="proj detail" id="who"><div class="wrap">
+  <p class="meta">Usability testing · INLS 719 team project · Fall 2024</p>
+  <h2>Five students, three tasks, one database where nobody could find “renal.”</h2>
+  <div class="cols">
+    <div>
+      <p>The WHO Mortality Database is how researchers, policy analysts and students look up deaths by cause, country, age and year. We wrote a full test plan, then ran it: a pilot plus five participants completing three realistic data-lookup tasks while thinking aloud.</p>
+      <p>I helped write much of the plan and worked sessions as scribe and technical lead. The plan covered goals, research questions, a metrics framework (efficiency, task success, failure analysis, ease and satisfaction), moderator script, consent form, interview guide, after-task surveys, and an observation form. Before testing, a heuristic evaluation predicted the problems we later saw.</p>
+      <h3>What we found</h3>
+      <ul class="plain">
+        <li><b>Terminology hid the data.</b> Kidney disease sits under “Genitourinary diseases,” and the page has no search. No one finished Task 2 correctly; one person quit and four stopped at the broad category. Three of five needed a hint.</li>
+        <li><b>Comparing two countries took the longest.</b> Task 3 averaged 5:19 and 42 clicks. People had to discover that a different chart type was the only way to select both Canada and Japan.</li>
+        <li><b>Filters didn’t say what was applied.</b> Four of five participants stumbled on the age filter in Task 1, and charts don’t label country or year, as the heuristic review had flagged.</li>
+      </ul>
+      <p>Participants’ own suggestions: a search bar or glossary for diseases, tooltips on chart icons, and a visible label for the selected cause.</p>
+      <ul class="chips"><li>Heuristic evaluation</li><li>Moderated think-aloud</li><li>Metrics design</li><li>Observation and coding</li><li>Excel analysis</li></ul>
+    </div>
+    <div class="panel">
+      <h3>How each participant did</h3>
+      <p class="note" style="margin:0 0 .5rem">Fully correct answer, partly correct, or gave up. Select a task for details.</p>
+      <table class="matrix" aria-label="Task completion by participant">
+        <thead><tr><td></td><th scope="col">P1</th><th scope="col">P2</th><th scope="col">P3</th><th scope="col">P4</th><th scope="col">P5</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Task 1</th><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td></tr>
+          <tr><th scope="row">Task 2</th><td><i class="cell c0" title="Gave up"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td></tr>
+          <tr><th scope="row">Task 3</th><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td></tr>
+        </tbody>
+      </table>
+      <div class="legend"><span><i style="background:var(--ok)"></i>Correct</span><span><i style="background:var(--part)"></i>Partly correct</span><span><i style="background:var(--bad)"></i>Gave up</span></div>
+      <div class="tasktabs" role="tablist" aria-label="Task details">
+        <button role="tab" aria-selected="true" data-t="0">Task 1</button><button role="tab" aria-selected="false" data-t="1">Task 2</button><button role="tab" aria-selected="false" data-t="2">Task 3</button>
+      </div>
+      <div class="stats"><div><b id="sTime">1:47</b>avg time</div><div><b id="sClicks">11.8</b>avg clicks</div><div><b id="sHelp">0 of 5</b>needed a hint</div></div>
+      <p id="taskText" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="shots">
+    <figure><a href="images/who-task1-chart.jpg"><img src="images/who-task1-chart.jpg" alt="WHO Mortality Database chart of non-communicable disease deaths, ages 15–24, with filters above it" loading="lazy"></a><figcaption><b>Task 1.</b> The chart title and axes don’t say which country or year it shows. You have to check the filters above it.</figcaption></figure>
+    <figure><a href="images/who-disease-list.jpg"><img src="images/who-disease-list.jpg" alt="Causes of death explorer list showing Genitourinary diseases expanded to Nephritis and nephrosis" loading="lazy"></a><figcaption><b>Task 2.</b> Kidney disease is “Nephritis and nephrosis,” inside “Genitourinary diseases.”</figcaption></figure>
+    <figure><a href="images/who-task3-compare.jpg"><img src="images/who-task3-compare.jpg" alt="WHO line chart comparing Canada and Japan, 2019 to 2021, with a data table below" loading="lazy"></a><figcaption><b>Task 3.</b> The comparison view that participants had to find. Colors identify the countries only in a small legend.</figcaption></figure>
+  </div>
+  <p class="note" style="margin-top:1.5rem">Screenshots are from the WHO Mortality Database during testing. Averages are across the five participants (pilot excluded). A participant’s answer counts as “partly correct” when they found data but chose the wrong filter, such as a broad disease group. The after-task satisfaction survey results aren’t included here.</p>
+<div class="nextrow"><span></span><a href="hub.html" style="text-align:right"><span>Next &rarr;</span>Resource hub</a></div></div></section>
+</main>
+<footer><div class="wrap"><p style="margin-bottom:.5rem"><a href="index.html#projects">&larr; All projects</a></p><p class="note">Nathan Cavender &middot; <a href="mailto:cavender.nat@gmail.com">cavender.nat@gmail.com</a> &middot; <a href="Nathan_Cavender_Resume.pdf">Resume (PDF)</a></p></div></footer>
+<script src="who.js"></script>
+</body>
+</html>
