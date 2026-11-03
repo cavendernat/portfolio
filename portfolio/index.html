@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nathan Cavender – UX research, design and data analysis</title>
+<meta name="description" content="Information Science M.S. (UNC Chapel Hill). I test interfaces, build resource systems, and evaluate AI against human ground truth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eff3ed;--panel:#ffffff;--ink:#0c2416;--mute:#4d6354;--line:#d2ddd1;--accent:#124029;--ok:#3d9a6a;--part:#d9a21b;--bad:#b4483a;--serif:"Instrument Serif",Georgia,serif;--sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a13;--panel:#162a1e;--ink:#e6f0e8;--mute:#9bb5a3;--line:#294034;--accent:#7fcf9f;--ok:#52b88a;--part:#e6b43c;--bad:#e0715f}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:68rem;margin:0 auto;padding:0 1.5rem}
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-block:.8rem}
+.brand{font-weight:600;text-decoration:none;color:var(--ink)}
+nav a{margin-left:1.25rem;text-decoration:none;color:var(--mute);font-size:.95rem}
+nav a:hover{color:var(--ink)}
+.hero{padding:5rem 0 3.5rem}
+h1{font:400 clamp(2.4rem,6vw,4.4rem)/1.05 var(--serif);margin:0 0 1.5rem;max-width:18ch;letter-spacing:-.01em}
+.lede{font-size:1.2rem;max-width:44rem;color:var(--ink);margin:0 0 1rem}
+.sub{color:var(--mute);max-width:44rem;margin:0 0 1.75rem}
+.btns{display:flex;flex-wrap:wrap;gap:.75rem}
+.btn{display:inline-block;padding:.65rem 1.1rem;border-radius:8px;border:1.5px solid var(--ink);color:var(--ink);text-decoration:none;font-weight:500}
+.btn.main{background:var(--ink);color:var(--bg)}
+.btn:hover{border-color:var(--accent)}
+.thread{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:0;margin-top:3rem;border-top:1px solid var(--line)}
+.thread a{display:block;padding:1.1rem 1.25rem 1.2rem 0;text-decoration:none;color:var(--ink)}
+.thread b{display:block;font-weight:600}
+.thread span{color:var(--mute);font-size:.95rem}
+.thread a:hover b{color:var(--accent)}
+section.proj{padding:4.5rem 0;border-top:1px solid var(--line)}
+.meta{color:var(--mute);font-size:.95rem;margin:0 0 .6rem}
+h2{font:400 clamp(1.9rem,4vw,2.8rem)/1.1 var(--serif);margin:0 0 1.25rem;max-width:24ch}
+h3{font-size:1.05rem;margin:0 0 .35rem}
+.cols{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:3rem;align-items:start}
+@media (max-width:52rem){.cols{grid-template-columns:1fr;gap:2rem}nav a:not(:last-child){display:none}}
+p{margin:0 0 1rem;max-width:40rem}
+ul.plain{padding-left:1.1rem;margin:0 0 1rem}
+ul.plain li{margin-bottom:.4rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.25rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 0;padding:0;list-style:none}
+.chips li{font-size:.85rem;padding:.2rem .65rem;border:1px solid var(--line);border-radius:99px;color:var(--mute)}
+/* WHO matrix */
+.matrix{width:100%;border-collapse:separate;border-spacing:5px}
+.matrix th{font-weight:500;font-size:.85rem;color:var(--mute);text-align:left}
+.matrix thead th{text-align:center}
+.matrix td{padding:0}
+.cell{display:block;width:100%;height:2.4rem;border-radius:6px;border:0}
+.c1{background:var(--ok)}.c5{background:var(--part)}.c0{background:var(--bad)}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.85rem;color:var(--mute);margin:.6rem 0 0}
+.legend i{display:inline-block;width:.8rem;height:.8rem;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+.tasktabs{display:flex;gap:.5rem;margin:1.25rem 0 .75rem;flex-wrap:wrap}
+.tasktabs button{font:inherit;font-size:.9rem;padding:.4rem .8rem;border-radius:8px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.tasktabs button[aria-selected="true"]{border-color:var(--accent);background:var(--panel);font-weight:600}
+.stats{display:flex;gap:1.5rem;margin:0 0 .5rem;font-size:.9rem;color:var(--mute)}
+.stats b{display:block;font:400 1.7rem/1.1 var(--serif);color:var(--ink)}
+#taskText{margin:0;min-height:5.2rem}
+.note{font-size:.88rem;color:var(--mute)}
+/* bars */
+.bars{display:grid;gap:.9rem}
+.bar .lab{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.2rem}
+.track{height:.7rem;background:var(--line);border-radius:4px;margin-bottom:.25rem;position:relative}
+.track i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.hum{background:var(--ink)}.mod{background:var(--accent)}
+.key{display:flex;gap:1rem;font-size:.85rem;color:var(--mute);margin-bottom:1rem}
+.key i{display:inline-block;width:.8rem;height:.8rem;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+.flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.9rem;margin:0 0 1.25rem;padding:0;list-style:none}
+.flow li{padding:.35rem .7rem;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.flow li+li::before{content:"";}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:0 0 1.25rem}
+.big div{font-size:.88rem;color:var(--mute)}
+.big b{display:block;font:400 2.2rem/1.05 var(--serif);color:var(--ink)}
+/* hub + tamer mocks */
+.hub{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.hub span{padding:.7rem .8rem;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:.9rem}
+.before{font-size:.9rem;color:var(--mute);margin:0 0 .5rem}
+.old{font-family:ui-monospace,Menlo,monospace;font-size:.8rem;color:var(--bad);margin:0 0 1.1rem;line-height:1.7}
+.old s{text-decoration-thickness:1px}
+.week{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem}
+.week div{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.35rem;min-height:9.5rem;position:relative;font-size:.7rem;color:var(--mute)}
+.week em{display:block;font-style:normal;margin-bottom:.3rem}
+.blk{position:absolute;left:.3rem;right:.3rem;border-radius:5px;padding:.15rem .3rem;font-size:.68rem;line-height:1.2;color:#fff}
+.blk.busy{background:#8a9ba1}.blk.task{background:var(--accent)}
+.pr{width:100%;border-collapse:collapse;font-size:.9rem}.pr th,.pr td{padding:.3rem .4rem;border-bottom:1px solid var(--line);text-align:right;font-weight:400}.pr th:first-child{text-align:left}.pr thead th{color:var(--mute);font-size:.82rem}.shots{display:grid;grid-template-columns:1.35fr .6fr 1fr;gap:1.25rem;align-items:start;margin-top:3rem}@media (max-width:52rem){.shots{grid-template-columns:1fr}}.shots figure{margin:0}.shots img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}.shots figcaption{font-size:.88rem;color:var(--mute);margin-top:.5rem;line-height:1.5}.shots b{color:var(--ink)}.shots.tamer{grid-template-columns:1.25fr 1fr .7fr}@media (max-width:52rem){.shots.tamer{grid-template-columns:1fr}}.shots.hubshots{grid-template-columns:1.1fr 1fr}.shots.hubshots figure:nth-child(3){grid-column:2;grid-row:1/span 2}@media (max-width:52rem){.shots.hubshots{grid-template-columns:1fr}.shots.hubshots figure:nth-child(3){grid-column:auto;grid-row:auto}}.rules{columns:2;column-gap:1.5rem;font-size:.92rem}
+@media (max-width:40rem){.rules{columns:1}}
+footer{border-top:1px solid var(--line);padding:3.5rem 0 4rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:2rem;margin-top:1.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top">Nathan Cavender</a>
+  <nav aria-label="Sections"><a href="#who">Usability testing</a><a href="#hub">Resource hub</a><a href="#tamer">Task Tamer</a><a href="#annotation">AI evaluation</a><a href="#contact">Contact</a></nav>
+</div></header>
+
+<main id="top">
+<div class="wrap hero">
+  <h1>I find where interfaces confuse people, then fix it.</h1>
+  <p class="lede">I’m a master’s graduate in Information Science (UNC Chapel Hill) looking for work in UX research, interface design, or data analysis.</p>
+  <p class="sub">Four projects below, in the order I’d tell the story: I plan and run usability tests, I build information systems for real organizations, I prototype quickly with LLM APIs, and I measure whether AI output matches human judgment.</p>
+  <div class="btns"><a class="btn main" href="Nathan_Cavender_Resume.pdf">Resume (PDF)</a><a class="btn" href="mailto:cavender.nat@gmail.com">Email me</a></div>
+  <div class="thread">
+    <a href="#who"><b>Test it</b><span>Usability study of the WHO Mortality Database</span></a>
+    <a href="#hub"><b>Build it</b><span>A resource hub for a climate and health nonprofit</span></a>
+    <a href="#tamer"><b>Prototype it</b><span>An AI task scheduler with a pet that grows</span></a>
+    <a href="#annotation"><b>Measure it</b><span>A pipeline that grades LLM annotation against human labels</span></a>
+  </div>
+</div>
+
+<section class="proj" id="who"><div class="wrap">
+  <p class="meta">Usability testing · INLS 719 team project · Fall 2024</p>
+  <h2>Five students, three tasks, one database where nobody could find “renal.”</h2>
+  <div class="cols">
+    <div>
+      <p>The WHO Mortality Database is how researchers, policy analysts and students look up deaths by cause, country, age and year. We wrote a full test plan, then ran it: a pilot plus five participants completing three realistic data-lookup tasks while thinking aloud.</p>
+      <p>I helped write much of the plan and worked sessions as scribe and technical lead. The plan covered goals, research questions, a metrics framework (efficiency, task success, failure analysis, ease and satisfaction), moderator script, consent form, interview guide, after-task surveys, and an observation form. Before testing, a heuristic evaluation predicted the problems we later saw.</p>
+      <h3>What we found</h3>
+      <ul class="plain">
+        <li><b>Terminology hid the data.</b> Kidney disease sits under “Genitourinary diseases,” and the page has no search. No one finished Task 2 correctly; one person quit and four stopped at the broad category. Three of five needed a hint.</li>
+        <li><b>Comparing two countries took the longest.</b> Task 3 averaged 5:19 and 42 clicks. People had to discover that a different chart type was the only way to select both Canada and Japan.</li>
+        <li><b>Filters didn’t say what was applied.</b> Four of five participants stumbled on the age filter in Task 1, and charts don’t label country or year, as the heuristic review had flagged.</li>
+      </ul>
+      <p>Participants’ own suggestions: a search bar or glossary for diseases, tooltips on chart icons, and a visible label for the selected cause.</p>
+      <ul class="chips"><li>Heuristic evaluation</li><li>Moderated think-aloud</li><li>Metrics design</li><li>Observation and coding</li><li>Excel analysis</li></ul>
+    </div>
+    <div class="panel">
+      <h3>How each participant did</h3>
+      <p class="note" style="margin:0 0 .5rem">Fully correct answer, partly correct, or gave up. Select a task for details.</p>
+      <table class="matrix" aria-label="Task completion by participant">
+        <thead><tr><td></td><th scope="col">P1</th><th scope="col">P2</th><th scope="col">P3</th><th scope="col">P4</th><th scope="col">P5</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Task 1</th><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td></tr>
+          <tr><th scope="row">Task 2</th><td><i class="cell c0" title="Gave up"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c5" title="Partly correct"></i></td></tr>
+          <tr><th scope="row">Task 3</th><td><i class="cell c5" title="Partly correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td><td><i class="cell c1" title="Correct"></i></td></tr>
+        </tbody>
+      </table>
+      <div class="legend"><span><i style="background:var(--ok)"></i>Correct</span><span><i style="background:var(--part)"></i>Partly correct</span><span><i style="background:var(--bad)"></i>Gave up</span></div>
+      <div class="tasktabs" role="tablist" aria-label="Task details">
+        <button role="tab" aria-selected="true" data-t="0">Task 1</button><button role="tab" aria-selected="false" data-t="1">Task 2</button><button role="tab" aria-selected="false" data-t="2">Task 3</button>
+      </div>
+      <div class="stats"><div><b id="sTime">1:47</b>avg time</div><div><b id="sClicks">11.8</b>avg clicks</div><div><b id="sHelp">0 of 5</b>needed a hint</div></div>
+      <p id="taskText" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="shots">
+    <figure><a href="images/who-task1-chart.jpg"><img src="images/who-task1-chart.jpg" alt="WHO Mortality Database chart of non-communicable disease deaths, ages 15–24, with filters above it" loading="lazy"></a><figcaption><b>Task 1.</b> The chart title and axes don’t say which country or year it shows. You have to check the filters above it.</figcaption></figure>
+    <figure><a href="images/who-disease-list.jpg"><img src="images/who-disease-list.jpg" alt="Causes of death explorer list showing Genitourinary diseases expanded to Nephritis and nephrosis" loading="lazy"></a><figcaption><b>Task 2.</b> Kidney disease is “Nephritis and nephrosis,” inside “Genitourinary diseases.”</figcaption></figure>
+    <figure><a href="images/who-task3-compare.jpg"><img src="images/who-task3-compare.jpg" alt="WHO line chart comparing Canada and Japan, 2019 to 2021, with a data table below" loading="lazy"></a><figcaption><b>Task 3.</b> The comparison view that participants had to find. Colors identify the countries only in a small legend.</figcaption></figure>
+  </div>
+  <p class="note" style="margin-top:1.5rem">Screenshots are from the WHO Mortality Database during testing. Averages are across the five participants (pilot excluded). A participant’s answer counts as “partly correct” when they found data but chose the wrong filter, such as a broad disease group. The after-task satisfaction survey results aren’t included here.</p>
+</div></section>
+
+<section class="proj" id="hub"><div class="wrap">
+  <p class="meta">Information architecture · Carolina Advocates for Climate, Health, and Equity</p>
+  <h2>From a list of links, many of them dead ends, to a hub people can navigate.</h2>
+  <div class="cols">
+    <div>
+      <p>Carolina Advocates is a North Carolina nonprofit that puts health equity at the center of climate conversations. Its resources page was a plain list of hyperlinks, and many led nowhere.</p>
+      <p>I built the Climate, Health &amp; Equity Resource Hub: a landing page plus five sub-pages. I designed each sub-page, found and checked the information sources, and decided which section each source belongs in, so a clinician can start from the question they have instead of scanning a list.</p>
+      <ul class="plain">
+        <li>Sorted sources into five themes written in the audience’s language.</li>
+        <li>Replaced dead links with sources that exist and fit the topic.</li>
+        <li>Gave every page the same structure so readers learn it once.</li>
+      </ul>
+      <p><a class="btn main" href="https://carolinaadvocates.org/resources" rel="noopener">Visit the live hub</a></p>
+      <ul class="chips"><li>Information architecture</li><li>Content curation</li><li>Page design</li><li>Squarespace</li></ul>
+    </div>
+    <figure class="panel" style="margin:0"><a href="images/hub-landing.jpg"><img src="images/hub-landing.jpg" alt="Top of the Climate, Health and Equity Resource Hub page on carolinaadvocates.org" style="width:100%;height:auto;display:block;border-radius:8px" loading="lazy"></a><figcaption class="note" style="margin-top:.7rem">The hub’s landing page: a plain-language promise to its audience, then five doors in.</figcaption></figure>
+  </div>
+  <div class="shots hubshots">
+    <figure><a href="images/hub-sections.jpg"><img src="images/hub-sections.jpg" alt="Five hub sections with one-sentence descriptions and Learn more buttons: Clinical Impacts, Health System Decarbonization, Education and Training, Equity and Justice, Severe Weather Preparedness" loading="lazy"></a><figcaption><b>Five sections, each with a one-sentence promise.</b> Readers choose by the question they have, not by hunting through a list.</figcaption></figure>
+    <figure><a href="images/hub-subpage-accordion.jpg"><img src="images/hub-subpage-accordion.jpg" alt="Sub-page lists of linked sources grouped under Academic Articles and Web Resources" loading="lazy"></a><figcaption><b>Sources, sorted.</b> Every sub-page ends with the same groups: Academic Articles, Web Resources and Videos.</figcaption></figure>
+    <figure><a href="images/hub-subpage-top.jpg"><img src="images/hub-subpage-top.jpg" alt="Top of the Health System Decarbonization sub-page with a Learn the Basics section containing a video and featured resources" loading="lazy"></a><figcaption><b>Inside a sub-page.</b> A plain-language definition, then “Learn the Basics” with a video and featured resources, then the full source lists. A row of links at the bottom leads to the other four sections.</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="proj" id="tamer"><div class="wrap">
+  <p class="meta">Prototype · HTML, JavaScript and an LLM API</p>
+  <h2>Task Tamer: an AI scheduler that plans work around what’s already on your week.</h2>
+  <div class="cols">
+    <div>
+      <p>You enter a task, how long it takes, and when it’s due. Task Tamer finds time for it around your existing events and shows the result on a weekly calendar. Finishing blocks makes a pet evolve from egg to creature, a small reward loop for getting things done.</p>
+      <h3>The design decision I’d point to</h3>
+      <p>The language model suggests a slot, but my code decides whether it’s allowed. Each suggestion is checked against busy times, working hours, the due date, and a rule against stacking the same task on one day. If a suggestion fails, a deterministic slot finder places the block instead. The model adds flexibility; it can’t break the schedule.</p>
+      <ul class="rules plain">
+        <li>Working hours 9:00–21:00</li>
+        <li>15-minute buffers between blocks</li>
+        <li>Long tasks split into sessions of 3 hours or less</li>
+        <li>Weekdays first, weekends only as a last resort</li>
+        <li>Everything lands before the due date</li>
+        <li>The model also writes a short note on why it scheduled things that way</li>
+      </ul>
+      <p><a class="btn" href="https://canva.link/1tadxg00lgv48jq" rel="noopener">View the presentation</a></p>
+      <ul class="chips"><li>JavaScript</li><li>LLM API (GPT-4o mini)</li><li>Prompt design</li><li>Constraint checking</li><li>Gamification</li></ul>
+    </div>
+    <figure class="panel hero-shot" style="margin:0"><a href="images/tamer-schedule-and-pet.jpg"><img src="images/tamer-schedule-and-pet.jpg" alt="Task Tamer showing an AI explanation of the schedule, a Homework block with a Complete checkbox, and the evolved green creature" style="width:100%;height:auto;display:block;border-radius:8px"></a><figcaption class="note" style="margin-top:.7rem">The result. The AI note explains why the block landed where it did, the task has a Complete checkbox, and the creature has evolved after completed work.</figcaption></figure>
+  </div>
+  <div class="shots tamer">
+    <figure><a href="images/tamer-add-event.jpg"><img src="images/tamer-add-event.jpg" alt="Add Event form with name, date, start time, length and color" loading="lazy"></a><figcaption><b>1. Register existing events.</b> These become the busy times the scheduler works around.</figcaption></figure>
+    <figure><a href="images/tamer-add-task.jpg"><img src="images/tamer-add-task.jpg" alt="Add Task form with due date, duration, priority and a queue of tasks to schedule" loading="lazy"></a><figcaption><b>2. Queue tasks.</b> Set a due date, duration and priority, then schedule the whole queue with one button.</figcaption></figure>
+    <figure><a href="images/tamer-baby-creature.jpg"><img src="images/tamer-baby-creature.jpg" alt="Pixel-art baby creature with leaf ears" loading="lazy"></a><figcaption><b>3. Earn your creature.</b> The baby form appears after the first completed tasks and grows from there.</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="proj" id="annotation"><div class="wrap">
+  <p class="meta">Data pipeline and evaluation · Graduate research assistant, UNC School of Information and Library Science with the Lab for Analytical Science</p>
+  <h2>Can an LLM place and label analyst comments the way people do?</h2>
+  <div class="cols">
+    <div>
+      <p>Analysts reading transcripts of recorded conversations add “operator comments” that explain what a passage means: who someone is, what a phrase hints at, what happened before. The team had a two-level taxonomy of about two dozen comment codes and a platform meant to learn it.</p>
+      <p>I built the pipeline that tests it. It takes a transcript and the taxonomy, asks an LLM where comments belong and which type each should be, then compares the answers with human-labeled ground truth. I automated alignment of transcripts, annotations and model output in Python and Excel, and designed experiments to surface inconsistencies and edge cases.</p>
+      <ol class="flow" aria-label="Pipeline steps"><li>Transcript</li><li>Taxonomy</li><li>LLM labels</li><li>Align</li><li>Compare to humans</li></ol>
+      <div class="big"><div><b>58%</b>accuracy on 708 human-labeled comments</div><div><b>0.28</b>Cohen’s kappa, agreement beyond chance</div><div><b>0.20</b>macro F1, averaged evenly across 9 types</div></div>
+      <h3>What the metrics showed</h3>
+      <ul class="plain">
+        <li><b>Accuracy hides the problem.</b> Weighted F1 is 0.56, but macro F1 is 0.20, because the model does well on the common clarification type and fails on the rare ones.</li>
+        <li><b>It over-labels clarification.</b> It got 80% of true clarifications, but 479 of its 708 labels were clarification, and 149 of them were wrong.</li>
+        <li><b>Context: right when it speaks, silent most of the time.</b> Precision is 65%, recall only 11%. Most missed context comments were relabeled as clarification (72 of 123).</li>
+        <li><b>Underlying intent: the opposite.</b> Recall is 57%, but it assigned the label 80 times and was right 4 times (5% precision). The prompt needs a sharper line between intent and the other types.</li>
+        <li>Acoustic elements, cover terms and speculation about unintelligible audio were never predicted.</li>
+      </ul>
+      <ul class="chips"><li>Python</li><li>Excel</li><li>LLM evaluation</li><li>Ground-truth comparison</li><li>Error analysis</li></ul>
+    </div>
+    <div class="panel">
+      <h3>Where the model drifted (full taxonomy)</h3>
+      <div class="key"><span><i class="hum"></i>Human labels</span><span><i class="mod"></i>Model labels</span></div>
+      <div class="bars">
+        <div class="bar"><div class="lab"><span>Abstract clarification</span><span>190 vs 24</span></div><div class="track"><i class="hum" style="width:95%"></i></div><div class="track"><i class="mod" style="width:12%"></i></div></div>
+        <div class="bar"><div class="lab"><span>Context</span><span>123 vs 20</span></div><div class="track"><i class="hum" style="width:61.5%"></i></div><div class="track"><i class="mod" style="width:10%"></i></div></div>
+        <div class="bar"><div class="lab"><span>Unclear</span><span>26 vs 199</span></div><div class="track"><i class="hum" style="width:13%"></i></div><div class="track"><i class="mod" style="width:99.5%"></i></div></div>
+        <div class="bar"><div class="lab"><span>Underlying intent</span><span>7 vs 80</span></div><div class="track"><i class="hum" style="width:3.5%"></i></div><div class="track"><i class="mod" style="width:40%"></i></div></div>
+      </div>
+      <h3 style="margin-top:1.5rem">Precision, recall and F1 by type</h3>
+      <table class="pr" aria-label="Precision, recall and F1 by comment type"><thead><tr><th scope="col">Type</th><th scope="col">Precision</th><th scope="col">Recall</th><th scope="col">F1</th></tr></thead><tbody>
+      <tr><th scope="row">Clarification (414)</th><td>0.69</td><td>0.80</td><td>0.74</td></tr>
+      <tr><th scope="row">Reference (103)</th><td>0.58</td><td>0.61</td><td>0.60</td></tr>
+      <tr><th scope="row">Context (123)</th><td>0.65</td><td>0.11</td><td>0.18</td></tr>
+      <tr><th scope="row">Underlying intent (7)</th><td>0.05</td><td>0.57</td><td>0.09</td></tr>
+      <tr><th scope="row">Nature of statement (23)</th><td>0.17</td><td>0.09</td><td>0.11</td></tr>
+      <tr><th scope="row">Implication (10)</th><td>0.11</td><td>0.10</td><td>0.11</td></tr>
+      <tr><th scope="row">Acoustic, cover term, speculation (28)</th><td>0</td><td>0</td><td>0</td></tr></tbody></table>
+      <p class="note" style="margin:1rem 0 0">Bar chart counts across 22 transcripts, from the earlier comparison file. “Top-level family” groups the clarification subtypes together, apart from context, reference and the other types.</p>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <h2>Looking for UX research, design, or data analysis work.</h2>
+  <p>I come to this field from information science, with a background running operations and teams before that. Both show up in how I work: I measure what matters, and I stay close to the people using the thing.</p>
+  <div class="facts">
+    <div><h3>Education</h3><p>M.S. Information Science, UNC Chapel Hill, 2026<br>B.S. Information Science, UNC Chapel Hill, 2024</p></div>
+    <div><h3>Also</h3><p>Data curation internship with the National Center for Data Services, analyzing usage data for MIT Libraries’ DSpace repository.</p></div>
+    <div><h3>Contact</h3><p><a href="Nathan_Cavender_Resume.pdf">Resume (PDF)</a><br><a href="https://cavendernat.github.io/portfolio/index.html">cavendernat.github.io/portfolio</a><br><a href="mailto:cavender.nat@gmail.com">cavender.nat@gmail.com</a></p></div>
+  </div>
+</div></footer>
+
+<script>
+(function(){
+  var T=[
+    {time:"1:47",clicks:"11.8",help:"0 of 5",text:"Find non-communicable disease deaths for ages 15–24 in Japan, 2020. Four of five got the right answer (763). One added extra age groups without noticing. Most people stumbled on the age filter, which deselects options in a way people didn’t expect."},
+    {time:"4:35",clicks:"24",help:"3 of 5",text:"Find kidney-disease deaths for ages 35–54 in Japan, 2021. Nobody got it fully right. The category is “Genitourinary,” there is no search, and people picked the whole group or gave up. One said, “I wish there was a search feature.”"},
+    {time:"5:19",clicks:"42.2",help:"3 of 5",text:"Compare communicable-disease deaths in Canada and Japan across three years. Four of five succeeded, slowly. The country picker only takes one country on the default chart, so people tried chart icons until they found one that allowed two."}
+  ];
+  var tabs=document.querySelectorAll(".tasktabs button");
+  function show(i){
+    tabs.forEach(function(b,j){b.setAttribute("aria-selected",j===i?"true":"false")});
+    document.getElementById("sTime").textContent=T[i].time;
+    document.getElementById("sClicks").textContent=T[i].clicks;
+    document.getElementById("sHelp").textContent=T[i].help;
+    document.getElementById("taskText").textContent=T[i].text;
+  }
+  tabs.forEach(function(b){b.addEventListener("click",function(){show(+b.dataset.t)})});
+  show(0);
+})();
+</script>
+</body>
+</html>
